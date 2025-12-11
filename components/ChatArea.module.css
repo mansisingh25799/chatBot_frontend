@@ -1,0 +1,495 @@
+.chatArea {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--chat-bg);
+  overflow: hidden;
+  position: relative;
+}
+
+.messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  scroll-behavior: smooth;
+}
+
+.messages::-webkit-scrollbar {
+  width: 8px;
+}
+
+.messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+.messages::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* Connection Status */
+.connectionStatus {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 193, 7, 0.1);
+  border: 1px solid rgba(255, 193, 7, 0.3);
+  border-radius: 20px;
+  color: var(--chat-text);
+  font-size: 13px;
+  z-index: 10;
+  animation: fadeInStatus 0.3s ease-out;
+}
+
+.connectionDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ffc107;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes fadeInStatus {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Empty State */
+.emptyState {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: var(--chat-text);
+  z-index: 1;
+  width: 100%;
+  max-width: 768px;
+  padding: 0 24px;
+}
+
+.emptyStateIcon {
+  font-size: 40px;
+  color: var(--accent);
+  margin-bottom: 20px;
+  opacity: 0.9;
+  display: inline-block;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(16, 163, 127, 0.1) 0%, rgba(16, 163, 127, 0.05) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(16, 163, 127, 0.15);
+}
+
+.emptyStateTitle {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 10px 0;
+  color: var(--chat-text);
+  letter-spacing: -0.01em;
+}
+
+.emptyStateText {
+  font-size: 15px;
+  margin: 0;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Message Rows */
+.userRow,
+.botRow {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  animation: fadeInMessage 0.3s ease-out;
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.userRow {
+  background-color: var(--message-user-bg, var(--chat-bg));
+  justify-content: flex-end;
+}
+
+.botRow {
+  background-color: var(--message-bot-bg);
+  justify-content: flex-start;
+}
+
+/* Message Wrapper */
+.messageWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  max-width: 768px;
+  padding: 0;
+  position: relative;
+  align-items: flex-start;
+}
+
+.userRow .messageWrapper {
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  margin-left: auto;
+  width: auto;
+  padding-right: 24px;
+  padding-left: 48px;
+}
+
+.botRow .messageWrapper {
+  justify-content: flex-start;
+  margin-right: auto;
+  width: auto;
+  padding-left: 24px;
+  padding-right: 48px;
+}
+
+/* Avatar */
+.avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+  margin-top: 2px;
+}
+
+.userRow .avatar {
+  background-color: #5436da;
+  color: white;
+  order: 2;
+}
+
+.botRow .avatar {
+  background-color: #19c37d;
+  color: white;
+  order: 1;
+}
+
+.avatar:hover {
+  transform: scale(1.05);
+}
+
+/* Message Content */
+.messageContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
+.userRow .messageContent {
+  align-items: flex-end;
+  max-width: min(calc(768px - 54px), 85%);
+}
+
+.botRow .messageContent {
+  align-items: flex-start;
+  max-width: min(calc(768px - 54px), 85%);
+}
+
+.userMsg,
+.botMsg {
+  padding: 12px 16px;
+  border-radius: 16px;
+  word-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.75;
+  position: relative;
+  transition: all 0.2s ease;
+  white-space: pre-wrap;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: inline-block;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.userMsg {
+  text-align: left;
+  background-color: rgba(16, 163, 127, 0.1);
+  color: var(--chat-text);
+  border: none;
+  border-radius: 18px 18px 4px 18px;
+  box-shadow: none;
+}
+
+.userMsg:hover {
+  background-color: rgba(16, 163, 127, 0.12);
+}
+
+[data-theme="light"] .userMsg {
+  background-color: rgba(16, 163, 127, 0.08);
+  color: var(--chat-text);
+}
+
+[data-theme="light"] .userMsg:hover {
+  background-color: rgba(16, 163, 127, 0.1);
+}
+
+.botMsg {
+  text-align: left;
+  background-color: transparent;
+  color: var(--chat-text);
+  border-radius: 18px 18px 18px 4px;
+  padding: 12px 16px;
+}
+
+/* Message Footer */
+.messageFooter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  margin-top: 4px;
+  padding: 0 2px;
+}
+
+.messageWrapper:hover .messageFooter {
+  opacity: 1;
+}
+
+.userRow .messageFooter {
+  justify-content: flex-end;
+  flex-direction: row-reverse;
+  margin-top: 4px;
+}
+
+.botRow .messageFooter {
+  justify-content: flex-start;
+  margin-top: 4px;
+}
+
+.timestamp {
+  font-size: 11px;
+  opacity: 0.5;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  user-select: none;
+  font-weight: 400;
+}
+
+.copyButton {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.copyButton:hover {
+  opacity: 1;
+  background: var(--hover-bg);
+}
+
+.copyButton:active {
+  transform: scale(0.95);
+}
+
+/* Typing Indicator */
+.typingIndicator {
+  display: flex;
+  gap: 6px;
+  padding: 8px 0;
+  align-items: center;
+}
+
+.typingIndicator span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--chat-text);
+  opacity: 0.6;
+  animation: typing 1.4s infinite ease-in-out;
+}
+
+.typingIndicator span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typingIndicator span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.typingIndicator span:nth-child(3) {
+  animation-delay: 0;
+}
+
+@keyframes typing {
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  30% {
+    transform: translateY(-10px);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInMessage {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .messages {
+    padding: 16px 20px;
+    gap: 16px;
+  }
+
+  .userRow,
+  .botRow {
+    max-width: 80%;
+  }
+
+  .userMsg,
+  .botMsg {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .timestamp {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .messages {
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .userRow,
+  .botRow {
+    max-width: 85%;
+  }
+
+  .userMsg,
+  .botMsg {
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 16px;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 0.85rem;
+  }
+
+  .messageWrapper {
+    gap: 10px;
+  }
+
+  .timestamp {
+    font-size: 10px;
+  }
+
+  .emptyStateIcon {
+    font-size: 3rem;
+  }
+
+  .emptyStateTitle {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .messages {
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .userRow,
+  .botRow {
+    max-width: 90%;
+  }
+
+  .userMsg,
+  .botMsg {
+    font-size: 13px;
+    padding: 8px 12px;
+    border-radius: 14px;
+  }
+
+  .avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+  }
+
+  .messageWrapper {
+    gap: 8px;
+  }
+
+  .timestamp {
+    font-size: 9px;
+  }
+
+  .emptyStateIcon {
+    font-size: 2.5rem;
+  }
+
+  .emptyStateTitle {
+    font-size: 1.1rem;
+  }
+
+  .emptyStateText {
+    font-size: 0.9rem;
+  }
+}

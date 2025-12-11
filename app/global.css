@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* CSS Variables - Light Theme */
+:root {
+  --background: #ffffff;
+  --text: #353740;
+  --text-secondary: #6e6e80;
+  --sidebar-bg: #f7f7f8;
+  --sidebar-text: #353740;
+  --sidebar-text-secondary: #6e6e80;
+  --hover-bg: #e5e5e5;
+  --accent: #10a37f;
+  --accent-hover: #0d8f6e;
+  --accent-light: rgba(16, 163, 127, 0.1);
+  --chat-bg: #ffffff;
+  --chat-text: #353740;
+  --input-bg: #ffffff;
+  --input-text: #353740;
+  --input-border: #d9d9e3;
+  --message-bot-bg: #f7f7f8;
+  --message-user-bg: #ffffff;
+  --message-border: #e5e5e5;
+  --message-border-hover: #d9d9e3;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
+  --border-radius-xl: 20px;
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* CSS Variables - Dark Theme */
+[data-theme="dark"] {
+  --background: #343541;
+  --text: #ececf1;
+  --text-secondary: #8e8ea0;
+  --sidebar-bg: #202123;
+  --sidebar-text: #ececf1;
+  --sidebar-text-secondary: #8e8ea0;
+  --hover-bg: #2f2f2f;
+  --accent: #10a37f;
+  --accent-hover: #0d8f6e;
+  --accent-light: rgba(16, 163, 127, 0.15);
+  --chat-bg: #343541;
+  --chat-text: #ececf1;
+  --input-bg: #40414f;
+  --input-text: #ececf1;
+  --input-border: #565869;
+  --message-bot-bg: #444654;
+  --message-user-bg: #343541;
+  --message-border: rgba(255, 255, 255, 0.05);
+  --message-border-hover: rgba(255, 255, 255, 0.1);
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  transition: background-color var(--transition-slow), color var(--transition-slow);
+  line-height: 1.6;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+p {
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* App Container */
+.appContainer {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--chat-bg);
+  position: relative;
+}
+
+/* Main Layout */
+.mainLayout {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: var(--chat-bg);
+  color: var(--chat-text);
+  transition: margin-left var(--transition-slow);
+  height: 100vh;
+  overflow: hidden;
+  margin-left: 260px;
+}
+
+@media (max-width: 768px) {
+  .mainLayout {
+    margin-left: 0;
+  }
+}
+
+/* Chat Area */
+.chatArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: var(--chat-bg);
+  position: relative;
+}
+
+.chatArea.withSidebar {
+  margin-left: 260px;
+  width: calc(100% - 260px);
+}
+
+.chatArea.collapsed {
+  margin-left: 70px;
+  width: calc(100% - 70px);
+}
+
+@media (max-width: 768px) {
+  .chatArea.withSidebar,
+  .chatArea.collapsed {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
+/* Chat Content */
+.chatContent {
+  flex: 1;
+  margin-top: 0;
+  overflow-y: auto;
+  padding: 20px 30px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .chatContent {
+    padding: 15px;
+  }
+}
+
+/* Sidebar Styles (global overrides) */
+.sideBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 260px;
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  transition: all var(--transition-slow);
+  z-index: 200;
+  overflow: hidden;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Common Utility Classes */
+.smooth-transition {
+  transition: all var(--transition-base);
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--hover-bg);
+  border-radius: 4px;
+  transition: background-color var(--transition-base);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--text-secondary);
+}
+
+/* Selection Styling */
+::selection {
+  background-color: var(--accent-light);
+  color: var(--accent);
+}
+
+/* Focus Styles */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-sm);
+}
+
+/* Auth Page Styles */
+.authFullPage {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background);
+}
+
+/* Loading Animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .sideBar,
+  .inputBar {
+    display: none;
+  }
+  
+  .chatArea {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  :root {
+    --accent: #6b37c5;
+    --hover-bg: #d1d5db;
+  }
+  
+  [data-theme="dark"] {
+    --accent: #a855f7;
+    --hover-bg: #374151;
+  }
+}
