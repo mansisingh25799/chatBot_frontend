@@ -16,6 +16,15 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+@supports (height: 100dvh) {
+  html,
+  body {
+    height: 100dvh;
+  }
 }
 
 /* CSS Variables - Light Theme */
@@ -26,7 +35,7 @@ body {
   --sidebar-bg: #f7f7f8;
   --sidebar-text: #353740;
   --sidebar-text-secondary: #6e6e80;
-  --hover-bg: #e5e5e5;
+  --hover-bg: #f0f0f0;
   --accent: #10a37f;
   --accent-hover: #0d8f6e;
   --accent-light: rgba(16, 163, 127, 0.1);
@@ -35,9 +44,9 @@ body {
   --input-bg: #ffffff;
   --input-text: #353740;
   --input-border: #d9d9e3;
-  --message-bot-bg: #f7f7f8;
+  --message-bot-bg: #ffffff;
   --message-user-bg: #ffffff;
-  --message-border: #e5e5e5;
+  --message-border: rgba(0, 0, 0, 0.05);
   --message-border-hover: #d9d9e3;
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -69,7 +78,7 @@ body {
   --input-bg: #40414f;
   --input-text: #ececf1;
   --input-border: #565869;
-  --message-bot-bg: #444654;
+  --message-bot-bg: #343541;
   --message-user-bg: #343541;
   --message-border: rgba(255, 255, 255, 0.05);
   --message-border-hover: rgba(255, 255, 255, 0.1);
@@ -121,6 +130,12 @@ p {
   margin-left: 260px;
 }
 
+@media (max-width: 1024px) {
+  .mainLayout {
+    margin-left: 0;
+  }
+}
+
 @media (max-width: 768px) {
   .mainLayout {
     margin-left: 0;
@@ -136,6 +151,7 @@ p {
   height: 100%;
   background-color: var(--chat-bg);
   position: relative;
+  transition: margin-left var(--transition-slow), width var(--transition-slow);
 }
 
 .chatArea.withSidebar {
@@ -148,11 +164,24 @@ p {
   width: calc(100% - 70px);
 }
 
+@media (max-width: 1024px) {
+  .chatArea.withSidebar,
+  .chatArea.collapsed {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+}
+
 @media (max-width: 768px) {
   .chatArea.withSidebar,
   .chatArea.collapsed {
     margin-left: 0 !important;
     width: 100% !important;
+  }
+  
+  .chatArea {
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile browsers */
   }
 }
 
@@ -272,6 +301,29 @@ p {
   .chatArea {
     margin-left: 0;
     width: 100%;
+  }
+}
+
+/* Touch-friendly Interactive Elements */
+@media (max-width: 768px) {
+  button,
+  a,
+  input:not([type="checkbox"]):not([type="radio"]),
+  textarea,
+  select {
+    min-height: 44px;
+  }
+  
+  button:not(.primary-btn):not(.sendBtn) {
+    padding: 12px;
+  }
+  
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-height: 16px;
+    min-width: 16px;
+    max-height: 18px;
+    max-width: 18px;
   }
 }
 

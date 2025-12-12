@@ -43,7 +43,14 @@
 
 .sideBar.closed .chatItem {
   justify-content: center;
-  padding: 10px;
+  padding: 12px;
+  min-width: 44px;
+}
+
+.sideBar.closed .chatItem svg {
+  font-size: 20px;
+  opacity: 1;
+  margin: 0;
 }
 
 .sideBar.closed .headerRow {
@@ -63,9 +70,19 @@
   padding: 8px;
 }
 
+.sideBar.closed .logo .icon {
+  font-size: 24px;
+  margin: 0;
+}
+
 .sideBar.closed .userInfo {
   justify-content: center;
-  padding: 10px;
+  padding: 12px;
+}
+
+.sideBar.closed .userAvatar {
+  font-size: 28px;
+  margin: 0;
 }
 
 .sideBar.closed .menuBtn {
@@ -388,6 +405,24 @@
   }
 }
 
+/* Tablet Styles */
+@media (max-width: 1024px) {
+  .sideBar {
+    transform: translateX(-100%);
+    width: 260px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sideBar.open {
+    transform: translateX(0);
+  }
+
+  .sideBar.closed {
+    width: 260px;
+    transform: translateX(-100%);
+  }
+}
+
 /* Mobile Styles */
 @media (max-width: 768px) {
   .mobileMenuBtn {
@@ -416,10 +451,11 @@
 
   .sideBar {
     transform: translateX(-100%);
-    width: 250px;
+    width: 280px;
+    max-width: 80vw;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     visibility: hidden;
-    z-index: -1;
+    z-index: 300;
     opacity: 0;
     pointer-events: none;
   }
@@ -427,15 +463,46 @@
   .sideBar.open {
     transform: translateX(0);
     visibility: visible;
-    z-index: 200;
+    z-index: 300;
     opacity: 1;
     pointer-events: auto;
   }
 
   .sideBar.closed {
-    width: 250px;
+    width: 280px;
+    max-width: 80vw;
+    transform: translateX(-100%);
+  }
+  
+  .sidebarOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 250;
+    backdrop-filter: blur(2px);
+  }
+}
+
+@media (max-width: 480px) {
+  .sideBar {
+    width: 100%;
+    max-width: 90vw;
   }
 
+  .sideBar.closed {
+    width: 100%;
+    max-width: 90vw;
+  }
+
+  .chatItem {
+    padding: 12px 14px;
+    font-size: 15px;
+  }
+
+  .chatItem svg {
+    font-size: 18px;
+  }
+  
   .sideBar.open .chatItem span,
   .sideBar.open .logo span,
   .sideBar.open .userDetails {

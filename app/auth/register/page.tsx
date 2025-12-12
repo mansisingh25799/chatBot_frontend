@@ -1,9 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FaUserPlus, FaAward } from "react-icons/fa";
 import "../auth.css";
+
+interface PasswordRequirement {
+  label: string;
+  met: boolean;
+}
 
 export default function Register() {
   const router = useRouter();
@@ -13,10 +18,47 @@ export default function Register() {
   const [company, setCompany] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPasswordReqs, setShowPasswordReqs] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Password validation
+  const passwordRequirements: PasswordRequirement[] = [
+    { label: "At least 8 characters", met: password.length >= 8 },
+    { label: "One uppercase letter", met: /[A-Z]/.test(password) },
+    { label: "One lowercase letter", met: /[a-z]/.test(password) },
+    { label: "One number", met: /[0-9]/.test(password) },
+    { label: "One special character", met: /[!@#$%^&*(),.?":{}|<>]/.test(password) },
+  ];
+
+  const isPasswordValid = passwordRequirements.every((req) => req.met);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (cardRef.current && !["INPUT", "TEXTAREA"].includes((e.target as HTMLElement).tagName)) {
+        const scrollAmount = 40;
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          cardRef.current.scrollBy({ top: scrollAmount, behavior: "smooth" });
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          cardRef.current.scrollBy({ top: -scrollAmount, behavior: "smooth" });
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+
+    if (!isPasswordValid) {
+      setError("Password does not meet all requirements. Please check the criteria below.");
+      setShowPasswordReqs(true);
+      return;
+    }
 
     try {
       setLoading(true);
@@ -33,7 +75,7 @@ export default function Register() {
 
   return (
     <div className="auth-wrapper">
-      <div className="auth-card">
+      <div className="auth-card" ref={cardRef} tabIndex={0}>
         <div className="auth-grid">
           <div className="auth-right">
             <div className="auth-icon">
@@ -100,12 +142,26 @@ export default function Register() {
                   id="registerPassword"
                   type="password"
                   className="text-input"
-                  placeholder="Minimum 8 characters"
+                  placeholder="Create a strong password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  onFocus={() => setShowPasswordReqs(true)}
                   autoComplete="new-password"
                   required
                 />
+                {(showPasswordReqs || password.length > 0) && (
+                  <div className="password-requirements">
+                    {passwordRequirements.map((req, index) => (
+                      <div
+                        key={index}
+                        className={`password-req ${req.met ? "met" : ""}`}
+                      >
+                        <span className="req-icon">{req.met ? "✓" : "○"}</span>
+                        <span className="req-label">{req.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <button className="primary-btn" type="submit" disabled={loading}>

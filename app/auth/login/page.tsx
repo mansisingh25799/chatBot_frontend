@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { FaShieldAlt, FaLock } from "react-icons/fa";
 import "../auth.css";
@@ -12,6 +12,25 @@ export default function LoginPage() {
   const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (cardRef.current && !["INPUT", "TEXTAREA"].includes((e.target as HTMLElement).tagName)) {
+        const scrollAmount = 40;
+        if (e.key === "ArrowDown") {
+          e.preventDefault();
+          cardRef.current.scrollBy({ top: scrollAmount, behavior: "smooth" });
+        } else if (e.key === "ArrowUp") {
+          e.preventDefault();
+          cardRef.current.scrollBy({ top: -scrollAmount, behavior: "smooth" });
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +56,7 @@ export default function LoginPage() {
 
   return (
     <div className="auth-wrapper">
-      <div className="auth-card">
+      <div className="auth-card" ref={cardRef} tabIndex={0}>
         <div className="auth-grid">
           <div className="auth-right">
             <div className="auth-icon">

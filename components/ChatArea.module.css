@@ -123,19 +123,18 @@
   line-height: 1.5;
 }
 
-/* Message Rows */
+/* Message Rows - ChatGPT Style */
 .userRow,
 .botRow {
   display: flex;
   flex-direction: row;
   width: 100%;
   animation: fadeInMessage 0.3s ease-out;
-  padding: 24px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 0;
 }
 
 .userRow {
-  background-color: var(--message-user-bg, var(--chat-bg));
+  background-color: var(--message-user-bg);
   justify-content: flex-end;
 }
 
@@ -148,156 +147,90 @@
 .messageWrapper {
   display: flex;
   flex-direction: row;
-  gap: 12px;
-  max-width: 768px;
-  padding: 0;
+  gap: 16px;
+  max-width: 70%;
+  padding: 20px 24px;
   position: relative;
   align-items: flex-start;
 }
 
 .userRow .messageWrapper {
-  justify-content: flex-end;
-  flex-direction: row-reverse;
+  flex-direction: row;
   margin-left: auto;
-  width: auto;
-  padding-right: 24px;
-  padding-left: 48px;
 }
 
 .botRow .messageWrapper {
-  justify-content: flex-start;
+  flex-direction: row;
   margin-right: auto;
-  width: auto;
-  padding-left: 24px;
-  padding-right: 48px;
 }
 
 /* Avatar */
 .avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 2px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   flex-shrink: 0;
-  transition: transform 0.2s ease;
-  margin-top: 2px;
+  transition: opacity 0.2s ease;
 }
 
 .userRow .avatar {
-  background-color: #5436da;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: white;
-  order: 2;
 }
 
 .botRow .avatar {
   background-color: #19c37d;
   color: white;
-  order: 1;
 }
 
 .avatar:hover {
-  transform: scale(1.05);
+  opacity: 0.9;
 }
 
-/* Message Content */
+/* Message Content - Full Width */
 .messageContent {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
   position: relative;
+  flex: 1;
   min-width: 0;
-  flex: 0 1 auto;
-}
-
-.userRow .messageContent {
-  align-items: flex-end;
-  max-width: min(calc(768px - 54px), 85%);
-}
-
-.botRow .messageContent {
-  align-items: flex-start;
-  max-width: min(calc(768px - 54px), 85%);
 }
 
 .userMsg,
 .botMsg {
-  padding: 12px 16px;
-  border-radius: 16px;
   word-wrap: break-word;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.75;
   position: relative;
-  transition: all 0.2s ease;
   white-space: pre-wrap;
-  max-width: 100%;
+  width: 100%;
   box-sizing: border-box;
-  display: inline-block;
   font-weight: 400;
-  letter-spacing: -0.01em;
-}
-
-.userMsg {
-  text-align: left;
-  background-color: rgba(16, 163, 127, 0.1);
+  letter-spacing: -0.003em;
   color: var(--chat-text);
-  border: none;
-  border-radius: 18px 18px 4px 18px;
-  box-shadow: none;
-}
-
-.userMsg:hover {
-  background-color: rgba(16, 163, 127, 0.12);
-}
-
-[data-theme="light"] .userMsg {
-  background-color: rgba(16, 163, 127, 0.08);
-  color: var(--chat-text);
-}
-
-[data-theme="light"] .userMsg:hover {
-  background-color: rgba(16, 163, 127, 0.1);
-}
-
-.botMsg {
-  text-align: left;
-  background-color: transparent;
-  color: var(--chat-text);
-  border-radius: 18px 18px 18px 4px;
-  padding: 12px 16px;
 }
 
 /* Message Footer */
 .messageFooter {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   opacity: 0;
   transition: opacity 0.2s ease;
-  margin-top: 4px;
-  padding: 0 2px;
+  margin-top: 8px;
 }
 
 .messageWrapper:hover .messageFooter {
   opacity: 1;
 }
 
-.userRow .messageFooter {
-  justify-content: flex-end;
-  flex-direction: row-reverse;
-  margin-top: 4px;
-}
-
-.botRow .messageFooter {
-  justify-content: flex-start;
-  margin-top: 4px;
-}
-
 .timestamp {
-  font-size: 11px;
-  opacity: 0.5;
+  font-size: 12px;
   color: var(--text-secondary);
   white-space: nowrap;
   user-select: none;
@@ -308,20 +241,19 @@
   background: transparent;
   border: none;
   color: var(--text-secondary);
-  opacity: 0.5;
   cursor: pointer;
-  padding: 4px 6px;
-  border-radius: 4px;
+  padding: 6px 8px;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  transition: all 0.2s ease;
+  font-size: 14px;
+  transition: all 0.15s ease;
 }
 
 .copyButton:hover {
-  opacity: 1;
   background: var(--hover-bg);
+  color: var(--text);
 }
 
 .copyButton:active {
@@ -381,104 +313,62 @@
 
 /* Responsive Design */
 @media (max-width: 1024px) {
-  .messages {
-    padding: 16px 20px;
-    gap: 16px;
-  }
-
-  .userRow,
-  .botRow {
+  .messageWrapper {
     max-width: 80%;
+    padding: 18px 16px;
+    gap: 14px;
   }
 
   .userMsg,
   .botMsg {
-    font-size: 14px;
-    padding: 10px 14px;
-  }
-
-  .avatar {
-    width: 32px;
-    height: 32px;
-    font-size: 0.9rem;
-  }
-
-  .timestamp {
-    font-size: 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .messages {
-    padding: 12px 16px;
-    gap: 12px;
-  }
-
-  .userRow,
-  .botRow {
-    max-width: 85%;
-  }
-
-  .userMsg,
-  .botMsg {
-    font-size: 14px;
-    padding: 10px 14px;
-    border-radius: 16px;
+    font-size: 15px;
   }
 
   .avatar {
     width: 30px;
     height: 30px;
-    font-size: 0.85rem;
-  }
-
-  .messageWrapper {
-    gap: 10px;
+    font-size: 15px;
   }
 
   .timestamp {
-    font-size: 10px;
+    font-size: 11px;
   }
-
-  .emptyStateIcon {
-    font-size: 3rem;
-  }
-
-  .emptyStateTitle {
-    font-size: 1.25rem;
+  
+  .emptyState {
+    padding: 0 20px;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .messages {
-    padding: 10px 12px;
-    gap: 10px;
+    padding-bottom: 80px;
   }
 
-  .userRow,
-  .botRow {
-    max-width: 90%;
+  .messageWrapper {
+    max-width: 85%;
+    padding: 14px 12px;
+    gap: 12px;
   }
 
   .userMsg,
   .botMsg {
-    font-size: 13px;
-    padding: 8px 12px;
-    border-radius: 14px;
+    font-size: 15px;
+    line-height: 1.6;
   }
 
   .avatar {
     width: 28px;
     height: 28px;
-    font-size: 0.8rem;
-  }
-
-  .messageWrapper {
-    gap: 8px;
+    font-size: 14px;
   }
 
   .timestamp {
-    font-size: 9px;
+    font-size: 11px;
+  }
+
+  .copyButton {
+    font-size: 13px;
+    padding: 5px 7px;
   }
 
   .emptyStateIcon {
@@ -486,10 +376,71 @@
   }
 
   .emptyStateTitle {
+    font-size: 1.25rem;
+  }
+  
+  .emptyState {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .messages {
+    padding-bottom: 90px;
+  }
+
+  .messageWrapper {
+    max-width: 90%;
+    padding: 12px 8px;
+    gap: 10px;
+  }
+
+  .userMsg,
+  .botMsg {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .avatar {
+    width: 26px;
+    height: 26px;
+    font-size: 13px;
+  }
+
+  .timestamp {
+    font-size: 10px;
+  }
+
+  .copyButton {
+    font-size: 12px;
+    padding: 4px 6px;
+  }
+
+  .messageFooter {
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .emptyStateIcon {
+    font-size: 2rem;
+  }
+
+  .emptyStateTitle {
     font-size: 1.1rem;
   }
 
   .emptyStateText {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+  }
+  
+  .emptyState {
+    padding: 0 12px;
+    max-width: 90%;
+  }
+  
+  .connectionStatus {
+    top: 60px;
+    font-size: 12px;
+    padding: 6px 12px;
   }
 }

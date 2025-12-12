@@ -105,14 +105,28 @@
   z-index: 1;
 }
 
+@media screen and (max-width: 1024px) {
+  .inputBar {
+    padding: 14px 0;
+  }
+
+  .inputContainer {
+    margin: 0 16px;
+    max-width: calc(100% - 32px);
+  }
+}
+
 @media screen and (max-width: 768px) {
   .inputBar {
     padding: 12px 0;
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
   }
 
   .inputContainer {
     padding: 0 16px;
-    max-width: 100%;
+    margin: 0 12px;
+    max-width: calc(100% - 24px);
+    border-radius: 20px;
   }
 
   .input {
@@ -124,19 +138,36 @@
     width: 32px;
     height: 32px;
   }
+  
+  .sendIcon {
+    font-size: 14px;
+  }
 }
 
 @media screen and (max-width: 480px) {
   .inputBar {
-    padding: 12px 0;
+    padding: 10px 0;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
   }
 
   .inputContainer {
     padding: 0 12px;
+    margin: 0 8px;
+    max-width: calc(100% - 16px);
+    border-radius: 18px;
   }
 
   .input {
     font-size: 16px;
-    padding: 10px 0;
+    padding: 8px 0;
+  }
+  
+  .sendBtn {
+    width: 30px;
+    height: 30px;
+  }
+  
+  .sendIcon {
+    font-size: 13px;
   }
 }
