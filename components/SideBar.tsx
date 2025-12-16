@@ -96,16 +96,17 @@ export default function SideBar({ isOpen, toggleSidebar }: SideBarProps) {
       >
         <div className={styles.sidebarContent}>
           <div className={styles.headerRow}>
-            <div className={styles.logo}>
-              <FaBalanceScale className={styles.icon} />
+            <div className={styles.logoContainer}>
+              <div className={styles.logo}>
+                <FaBalanceScale className={styles.icon} />
+              </div>
+              <button 
+                className={`${styles.menuBtn} ${styles.desktopOnly}`}
+                onClick={toggleSidebar}
+              >
+                {isOpen ? <FaChevronLeft /> : <FaChevronRight />}
+              </button>
             </div>
-
-            <button
-              className={`${styles.menuBtn} ${styles.desktopOnly}`}
-              onClick={toggleSidebar}
-            >
-              {isOpen ? <FaChevronLeft /> : <FaChevronRight />}
-            </button>
 
             {mobileOpen && (
               <button
@@ -143,17 +144,20 @@ export default function SideBar({ isOpen, toggleSidebar }: SideBarProps) {
               onClick={(e) => e.stopPropagation()}
             >
               <div className={styles.userMenuItem} onClick={toggleTheme}>
-                {theme === "dark" ? <FaSun /> : <FaMoon />}
-                <span>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+                <span className={styles.icon}>{theme === "dark" ? <FaSun /> : <FaMoon />}</span>
+                {isOpen && <span className={styles.label}>{theme === "dark" ? "Light Mode" : "Dark Mode"}</span>}
               </div>
               <div className={styles.userMenuItem}>
-                <FaCog /> <span>Settings</span>
+                <span className={styles.icon}><FaCog /></span>
+                {isOpen && <span className={styles.label}>Settings</span>}
               </div>
               <div className={styles.userMenuItem}>
-                <FaQuestionCircle /> <span>Help</span>
+                <span className={styles.icon}><FaQuestionCircle /></span>
+                {isOpen && <span className={styles.label}>Help</span>}
               </div>
               <div className={styles.userMenuItem} onClick={handleLogout}>
-                <FaSignOutAlt /> <span>Logout</span>
+                <span className={styles.icon}><FaSignOutAlt /></span>
+                {isOpen && <span className={styles.label}>Logout</span>}
               </div>
             </div>
           )}
@@ -206,3 +210,4 @@ export default function SideBar({ isOpen, toggleSidebar }: SideBarProps) {
     </>
   );
 }
+
