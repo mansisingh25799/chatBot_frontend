@@ -44,9 +44,9 @@ body {
   --accent-light: rgba(16, 163, 127, 0.1);
   --chat-bg: #ffffff;
   --chat-text: #353740;
-  --input-bg: #ffffff;
+  --input-bg: #f5f5f5;
   --input-text: #353740;
-  --input-border: #d9d9e3;
+  --input-border: #e0e0e0;
   --message-bot-bg: #ffffff;
   --message-user-bg: #ffffff;
   --message-border: rgba(0, 0, 0, 0.05);
@@ -1226,6 +1226,7 @@ p {
   transform: translate(-50%, -50%);
   width: 620px;
   max-width: 95%;
+  max-height: 90vh;
   background: var(--sidebar-bg);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -1234,6 +1235,8 @@ p {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   color: var(--sidebar-text);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   z-index: 1001;
   animation: SideBar_fadeInModal__Lkc4t 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -1272,31 +1275,64 @@ p {
 }
 
 .SideBar_searchResults__tDi6i {
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 8px;
   display: flex;
   flex-direction: column;
   gap: 4px;
   background: transparent;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(16, 163, 127, 0.4) rgba(16, 163, 127, 0.1);
 }
 
 .SideBar_searchResults__tDi6i::-webkit-scrollbar {
-  width: 8px;
-}
-
-.SideBar_searchResults__tDi6i::-webkit-scrollbar-thumb {
-  background-color: var(--hover-bg);
-  border-radius: 4px;
-}
-
-.SideBar_searchResults__tDi6i::-webkit-scrollbar-thumb:hover {
-  background-color: var(--accent);
-  opacity: 0.7;
+  width: 12px;
 }
 
 .SideBar_searchResults__tDi6i::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(16, 163, 127, 0.1);
+  border-radius: 6px;
+  margin: 6px 0;
+}
+
+.SideBar_searchResults__tDi6i::-webkit-scrollbar-thumb {
+  background-color: rgba(16, 163, 127, 0.4);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  min-height: 40px;
+  -webkit-transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease;
+}
+
+.SideBar_searchResults__tDi6i::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(16, 163, 127, 0.6);
+}
+
+.SideBar_searchResults__tDi6i::-webkit-scrollbar-thumb:active {
+  background-color: rgba(16, 163, 127, 0.7);
+}
+
+[data-theme="light"] .SideBar_searchResults__tDi6i {
+  scrollbar-color: rgba(16, 163, 127, 0.35) rgba(16, 163, 127, 0.08);
+}
+
+[data-theme="light"] .SideBar_searchResults__tDi6i::-webkit-scrollbar-track {
+  background: rgba(16, 163, 127, 0.08);
+}
+
+[data-theme="light"] .SideBar_searchResults__tDi6i::-webkit-scrollbar-thumb {
+  background-color: rgba(16, 163, 127, 0.35);
+}
+
+[data-theme="light"] .SideBar_searchResults__tDi6i::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(16, 163, 127, 0.5);
+}
+
+[data-theme="light"] .SideBar_searchResults__tDi6i::-webkit-scrollbar-thumb:active {
+  background-color: rgba(16, 163, 127, 0.6);
 }
 
 .SideBar_searchItem__8QtZz {

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./ChatArea.module.css";
 import InputBar from "./InputBar";
 import { Message } from "../types/MessageTypes";
-import { FaUser, FaRobot, FaCopy, FaCheck } from "react-icons/fa";
+import { FaUser, FaRobot, FaCopy, FaCheck, FaChevronLeft, FaSearch } from "react-icons/fa";
 
 export default function ChatArea({ isSidebarOpen }: { isSidebarOpen: boolean }) {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -108,8 +108,32 @@ export default function ChatArea({ isSidebarOpen }: { isSidebarOpen: boolean }) 
     }
   };
 
+  const getTimeAgo = (date: Date): string => {
+    const now = new Date();
+    const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
+    
+    if (diffInSeconds < 60) return "just now";
+    const diffInMinutes = Math.floor(diffInSeconds / 60);
+    if (diffInMinutes < 60) return `${diffInMinutes} min ago`;
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    if (diffInHours < 24) return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
+    const diffInDays = Math.floor(diffInHours / 24);
+    return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
+  };
+
   return (
     <div className={styles.chatArea}>
+      {/* Mobile Header */}
+      <div className={styles.mobileHeader}>
+        <button className={styles.backButton}>
+          <FaChevronLeft />
+        </button>
+        <h1 className={styles.mobileTitle}>Chat bot</h1>
+        <button className={styles.searchButton}>
+          <FaSearch />
+        </button>
+      </div>
+
       {!connected && (
         <div className={styles.connectionStatus}>
           <div className={styles.connectionDot}></div>
@@ -143,7 +167,7 @@ export default function ChatArea({ isSidebarOpen }: { isSidebarOpen: boolean }) 
                 </div>
                 <div className={styles.messageFooter}>
                   <div className={styles.timestamp}>
-                    {new Date(msg.timestamp).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                    {getTimeAgo(msg.timestamp)}
                   </div>
                   <button
                     className={styles.copyButton}

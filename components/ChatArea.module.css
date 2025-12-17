@@ -7,6 +7,49 @@
   overflow: hidden;
   position: relative;
   box-sizing: border-box;
+  min-height: 0;
+}
+
+/* Mobile Header */
+.mobileHeader {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: #ffffff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.backButton,
+.searchButton {
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+}
+
+.backButton:hover,
+.searchButton:hover {
+  background-color: rgba(16, 163, 127, 0.1);
+}
+
+.mobileTitle {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0;
+  flex: 1;
+  text-align: center;
 }
 
 .messages {
@@ -19,23 +62,58 @@
   scroll-behavior: smooth;
   width: 100%;
   box-sizing: border-box;
+  min-height: 0;
+  max-height: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) rgba(255, 255, 255, 0.08);
 }
 
 .messages::-webkit-scrollbar {
-  width: 8px;
+  width: 12px;
 }
 
 .messages::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  margin: 8px 0;
 }
 
 .messages::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  min-height: 40px;
+  transition: background-color 0.2s ease;
 }
 
 .messages::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.messages::-webkit-scrollbar-thumb:active {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Light theme scrollbar */
+[data-theme="light"] .messages {
+  scrollbar-color: rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .messages::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .messages::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] .messages::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="light"] .messages::-webkit-scrollbar-thumb:active {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 /* Connection Status */
@@ -171,24 +249,26 @@
 
 /* Avatar */
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 18px;
   flex-shrink: 0;
   transition: opacity 0.2s ease;
+  border: 2px solid #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .userRow .avatar {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  background-color: var(--accent);
   color: white;
 }
 
 .botRow .avatar {
-  background-color: #19c37d;
+  background-color: var(--accent);
   color: white;
 }
 
@@ -218,6 +298,23 @@
   font-weight: 400;
   letter-spacing: -0.003em;
   color: var(--chat-text);
+  border-radius: 18px;
+  padding: 12px 16px;
+}
+
+.userMsg {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+.botMsg {
+  background-color: #f5f5f5;
+  color: var(--chat-text);
+}
+
+[data-theme="dark"] .botMsg {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--chat-text);
 }
 
 /* Message Footer */
@@ -240,6 +337,8 @@
   white-space: nowrap;
   user-select: none;
   font-weight: 400;
+  opacity: 0.7;
+  margin-top: 4px;
 }
 
 .copyButton {
@@ -357,38 +456,81 @@
   .chatArea {
     width: 100vw;
     margin-left: 0 !important;
+    background-color: #ffffff;
+  }
+
+  .mobileHeader {
+    display: flex;
   }
   
   .messages {
-    padding: 60px 0 80px 0;
+    padding: 16px 12px 100px 12px;
     width: 100%;
+    background-color: #ffffff;
   }
 
   .messageWrapper {
-    max-width: 90%;
-    padding: 14px 12px;
-    gap: 12px;
+    max-width: 85%;
+    padding: 8px 0;
+    gap: 10px;
+  }
+
+  .userRow .messageWrapper {
+    margin-left: auto;
+    margin-right: 0;
+  }
+
+  .botRow .messageWrapper {
+    margin-right: auto;
+    margin-left: 0;
   }
 
   .userMsg,
   .botMsg {
     font-size: 15px;
-    line-height: 1.6;
+    line-height: 1.5;
+    padding: 12px 14px;
+    border-radius: 18px;
+  }
+
+  .userMsg {
+    background-color: var(--accent);
+    color: #ffffff;
+  }
+
+  .botMsg {
+    background-color: #f5f5f5;
+    color: #353740;
   }
 
   .avatar {
-    width: 28px;
-    height: 28px;
-    font-size: 14px;
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+    border: 2px solid #ffffff;
+  }
+
+  .userRow .avatar {
+    background-color: var(--accent);
+  }
+
+  .botRow .avatar {
+    background-color: var(--accent);
   }
 
   .timestamp {
     font-size: 11px;
+    opacity: 0.6;
+    margin-top: 4px;
+  }
+
+  .messageFooter {
+    opacity: 1;
+    margin-top: 4px;
   }
 
   .copyButton {
-    font-size: 13px;
-    padding: 5px 7px;
+    display: none;
   }
 
   .emptyStateIcon {
@@ -403,6 +545,10 @@
     padding: 0 16px;
     max-width: 100%;
   }
+
+  .connectionStatus {
+    top: 60px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -410,43 +556,50 @@
     width: 100vw;
     height: 100vh;
     height: 100dvh;
+    background-color: #ffffff;
+  }
+
+  .mobileHeader {
+    padding: 10px 12px;
+  }
+
+  .mobileTitle {
+    font-size: 16px;
+  }
+
+  .backButton,
+  .searchButton {
+    font-size: 18px;
+    padding: 6px;
   }
   
   .messages {
-    padding: 60px 0 90px 0;
+    padding: 12px 8px 100px 8px;
     width: 100%;
+    background-color: #ffffff;
   }
 
   .messageWrapper {
-    max-width: 92%;
-    padding: 12px 8px;
-    gap: 10px;
+    max-width: 88%;
+    padding: 6px 0;
+    gap: 8px;
   }
 
   .userMsg,
   .botMsg {
     font-size: 14px;
     line-height: 1.5;
+    padding: 10px 12px;
   }
 
   .avatar {
-    width: 26px;
-    height: 26px;
-    font-size: 13px;
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
   }
 
   .timestamp {
     font-size: 10px;
-  }
-
-  .copyButton {
-    font-size: 12px;
-    padding: 4px 6px;
-  }
-
-  .messageFooter {
-    gap: 6px;
-    margin-top: 6px;
   }
 
   .emptyStateIcon {
@@ -467,7 +620,7 @@
   }
   
   .connectionStatus {
-    top: 60px;
+    top: 50px;
     font-size: 12px;
     padding: 6px 12px;
   }

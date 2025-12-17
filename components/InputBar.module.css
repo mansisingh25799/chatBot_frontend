@@ -15,16 +15,41 @@
 .inputContainer {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   width: 100%;
   max-width: 768px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 8px 12px;
   background: var(--input-bg);
   border-radius: 24px;
   border: 1px solid var(--input-border);
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   transition: all 0.2s ease;
+}
+
+.iconButton {
+  background: transparent;
+  border: none;
+  color: var(--accent);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.iconButton:hover {
+  opacity: 1;
+  background-color: rgba(16, 163, 127, 0.1);
+}
+
+.iconButton:active {
+  transform: scale(0.95);
 }
 
 .inputBar:focus-within .inputContainer {
@@ -43,12 +68,13 @@
   border: none;
   outline: none;
   font-size: 16px;
-  padding: 12px 0;
+  padding: 8px 4px;
   font-family: inherit;
   line-height: 1.5;
   transition: all 0.2s ease;
   resize: none;
   max-height: 200px;
+  min-height: 24px;
 }
 
 .input::placeholder {
@@ -67,9 +93,9 @@
   background: var(--accent);
   border: none;
   color: white;
-  width: 32px;
-  height: 32px;
-  border-radius: 50px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -78,7 +104,7 @@
   flex-shrink: 0;
   position: relative;
   overflow: hidden;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .sendBtn:hover:not(:disabled) {
@@ -120,27 +146,38 @@
   .inputBar {
     padding: 12px 0;
     padding-bottom: max(12px, env(safe-area-inset-bottom));
+    background: #ffffff;
   }
 
   .inputContainer {
-    padding: 0 16px;
+    padding: 6px 8px;
     margin: 0 12px;
     max-width: calc(100% - 24px);
-    border-radius: 20px;
+    border-radius: 24px;
+    background: #f5f5f5;
+    border: none;
+    gap: 6px;
   }
 
   .input {
     font-size: 16px;
-    padding: 10px 0;
+    padding: 6px 4px;
+    background: transparent;
+  }
+
+  .iconButton {
+    font-size: 20px;
+    padding: 6px;
+    color: var(--accent);
   }
 
   .sendBtn {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
   }
   
   .sendIcon {
-    font-size: 14px;
+    font-size: 16px;
   }
 }
 
@@ -148,26 +185,35 @@
   .inputBar {
     padding: 10px 0;
     padding-bottom: max(10px, env(safe-area-inset-bottom));
+    background: #ffffff;
   }
 
   .inputContainer {
-    padding: 0 12px;
+    padding: 6px 6px;
     margin: 0 8px;
     max-width: calc(100% - 16px);
-    border-radius: 18px;
+    border-radius: 24px;
+    background: #f5f5f5;
+    border: none;
+    gap: 4px;
   }
 
   .input {
-    font-size: 16px;
-    padding: 8px 0;
+    font-size: 15px;
+    padding: 6px 2px;
+  }
+
+  .iconButton {
+    font-size: 18px;
+    padding: 6px;
   }
   
   .sendBtn {
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
   }
   
   .sendIcon {
-    font-size: 13px;
+    font-size: 15px;
   }
 }

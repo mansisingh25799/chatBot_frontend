@@ -670,6 +670,7 @@
   transform: translate(-50%, -50%);
   width: 620px;
   max-width: 95%;
+  max-height: 90vh;
   background: var(--sidebar-bg);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
@@ -678,6 +679,8 @@
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   color: var(--sidebar-text);
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
   z-index: 1001;
   animation: fadeInModal 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -716,31 +719,63 @@
 }
 
 .searchResults {
-  max-height: 300px;
+  max-height: 400px;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 8px;
   display: flex;
   flex-direction: column;
   gap: 4px;
   background: transparent;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(16, 163, 127, 0.4) rgba(16, 163, 127, 0.1);
 }
 
 .searchResults::-webkit-scrollbar {
-  width: 8px;
-}
-
-.searchResults::-webkit-scrollbar-thumb {
-  background-color: var(--hover-bg);
-  border-radius: 4px;
-}
-
-.searchResults::-webkit-scrollbar-thumb:hover {
-  background-color: var(--accent);
-  opacity: 0.7;
+  width: 12px;
 }
 
 .searchResults::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(16, 163, 127, 0.1);
+  border-radius: 6px;
+  margin: 6px 0;
+}
+
+.searchResults::-webkit-scrollbar-thumb {
+  background-color: rgba(16, 163, 127, 0.4);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  min-height: 40px;
+  transition: background-color 0.2s ease;
+}
+
+.searchResults::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(16, 163, 127, 0.6);
+}
+
+.searchResults::-webkit-scrollbar-thumb:active {
+  background-color: rgba(16, 163, 127, 0.7);
+}
+
+[data-theme="light"] .searchResults {
+  scrollbar-color: rgba(16, 163, 127, 0.35) rgba(16, 163, 127, 0.08);
+}
+
+[data-theme="light"] .searchResults::-webkit-scrollbar-track {
+  background: rgba(16, 163, 127, 0.08);
+}
+
+[data-theme="light"] .searchResults::-webkit-scrollbar-thumb {
+  background-color: rgba(16, 163, 127, 0.35);
+}
+
+[data-theme="light"] .searchResults::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(16, 163, 127, 0.5);
+}
+
+[data-theme="light"] .searchResults::-webkit-scrollbar-thumb:active {
+  background-color: rgba(16, 163, 127, 0.6);
 }
 
 .searchItem {
